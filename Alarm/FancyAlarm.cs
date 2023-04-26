@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alarm
 {
-    internal class MyAlarm : IAlarm
+    internal class FancyAlarm : IAlarm
     {
         private List<IListener> listeners = new List<IListener>();
 
@@ -25,7 +25,7 @@ namespace Alarm
 
         public void Beep()
         {
-            Console.WriteLine("Alarm says Beep!");
+            Console.WriteLine("Alarm says B.E.E.P.!");
             listeners.ForEach(listener => listener.OnAlarm());
         }
     }
