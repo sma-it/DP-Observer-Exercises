@@ -6,27 +6,25 @@ using System.Threading.Tasks;
 
 namespace Numbers
 {
-    internal class Memory : IObserver
+    internal class Memory
     {
         
 
-        public Memory(ISubject subject)
+        public Memory(Generator subject)
         {
             _subject = subject;
-            subject.Subscribe(this);
+            _subject.OnChange += OnNewNumber;
         }
         
-        ISubject? _subject = null;
+        Generator? _subject = null;
 
         public void Unsubscribe()
         {
-            _subject?.Unsubscribe(this);
-            _subject = null;
-        }
-
-        ~Memory()
-        {
-            Unsubscribe();
+            if (_subject != null)
+            {
+                _subject.OnChange -= OnNewNumber;
+                _subject = null;
+            }
         }
 
         private List<int> _memory = new List<int>();

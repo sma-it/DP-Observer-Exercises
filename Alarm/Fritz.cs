@@ -6,26 +6,27 @@ using System.Threading.Tasks;
 
 namespace Alarm
 {
-    internal class Fritz : IListener
+    internal class Fritz
     {
         private IAlarm? currentAlarm = null;
         public Fritz(IAlarm alarm)
         {
-            alarm.AddListener(this);
+            currentAlarm = alarm;
+            currentAlarm.OnBeep += OnAlarm;
         }
 
         public void ListenTo(IAlarm alarm)
         {
             StopListening();
-            alarm.AddListener(this);
             currentAlarm = alarm;
+            currentAlarm.OnBeep += OnAlarm;
         }
 
         public void StopListening()
         {
             if (currentAlarm != null)
             {
-                currentAlarm.RemoveListener(this);
+                currentAlarm.OnBeep -= OnAlarm;
             }
         }
 

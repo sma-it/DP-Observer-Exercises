@@ -22,12 +22,12 @@ void SoundAlarm2()
 
 void AddDog()
 {
-    alarm2.AddListener(dog);
+    alarm2.OnBeep += dog.OnAlarm;
 }
 
 void RemoveDog()
 {
-    alarm2.RemoveListener(dog);
+    alarm2.OnBeep -= dog.OnAlarm;
 }
 
 

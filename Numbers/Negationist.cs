@@ -6,25 +6,23 @@ using System.Threading.Tasks;
 
 namespace Numbers
 {
-    internal class Negationist : IObserver
+    internal class Negationist
     {
-        public Negationist(ISubject subject)
+        public Negationist(Generator subject)
         {
             _subject = subject;
-            subject.Subscribe(this);
+            subject.OnChange += OnNewNumber;
         }
 
-        ~Negationist()
-        {
-            Unsubscribe();
-        }
-
-        ISubject? _subject = null;
+        Generator? _subject = null;
 
         public void Unsubscribe()
         {
-            _subject?.Unsubscribe(this);
-            _subject = null;
+            if (_subject != null)
+            {
+                _subject.OnChange -= OnNewNumber;
+                _subject = null;
+            }
         }
 
         public void OnNewNumber(int number)

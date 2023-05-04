@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Alarm
 {
-    internal class Gordon : IListener
+    internal class Gordon
     {
         private IAlarm? currentAlarm = null;
         public Gordon(IAlarm alarm)
         {
-            alarm.AddListener(this);
+            currentAlarm = alarm;
+            currentAlarm.OnBeep += OnAlarm;
         }
         public void OnAlarm()
         {
@@ -22,7 +23,7 @@ namespace Alarm
         {
             if (currentAlarm != null)
             {
-                currentAlarm.RemoveListener(this);
+                currentAlarm.OnBeep -= OnAlarm;
             }
         }
     }

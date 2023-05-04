@@ -6,25 +6,23 @@ using System.Threading.Tasks;
 
 namespace Numbers
 {
-    internal class Parrot : IObserver
+    internal class Parrot
     {
-        public Parrot(ISubject subject)
+        public Parrot(Generator subject)
         {
             _subject = subject;
-            subject.Subscribe(this);
+            subject.OnChange += OnNewNumber;
         }
 
-        ~Parrot()
-        {
-            Unsubscribe();
-        }
-
-        ISubject? _subject = null;
+        Generator? _subject = null;
 
         public void Unsubscribe()
         {
-            _subject?.Unsubscribe(this);
-            _subject = null;
+            if (_subject != null)
+            {
+                _subject.OnChange -= OnNewNumber;
+                _subject = null;
+            }
         }
 
         public void OnNewNumber(int number)

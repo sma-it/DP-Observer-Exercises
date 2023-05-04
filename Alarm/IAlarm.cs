@@ -8,7 +8,7 @@ namespace Alarm
 {
     internal interface IAlarm
     {
-        void AddListener(IListener listener);
-        void RemoveListener(IListener listener);
+        delegate void OnBeepHandler();
+        event OnBeepHandler? OnBeep;
     }
 }

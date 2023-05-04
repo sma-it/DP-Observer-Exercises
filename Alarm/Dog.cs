@@ -6,26 +6,27 @@ using System.Threading.Tasks;
 
 namespace Alarm
 {
-    internal class Dog : IListener
+    internal class Dog
     {
         private IAlarm? currentAlarm = null;
         public Dog(IAlarm alarm)
         {
-            alarm.AddListener(this);
+            currentAlarm = alarm;
+            alarm.OnBeep += OnAlarm;
         }
 
         public void ListenTo(IAlarm alarm)
         {
             StopListening();
-            alarm.AddListener(this);
             currentAlarm = alarm;
+            currentAlarm.OnBeep += OnAlarm;
         }
 
         public void StopListening()
         {
             if (currentAlarm != null)
             {
-                currentAlarm.RemoveListener(this);
+                currentAlarm.OnBeep -= OnAlarm;
             }
         }
 
