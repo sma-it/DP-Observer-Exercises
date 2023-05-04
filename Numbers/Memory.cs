@@ -6,8 +6,29 @@ using System.Threading.Tasks;
 
 namespace Numbers
 {
-    internal class Memory
+    internal class Memory : IObserver
     {
+        
+
+        public Memory(ISubject subject)
+        {
+            _subject = subject;
+            subject.Subscribe(this);
+        }
+        
+        ISubject? _subject = null;
+
+        public void Unsubscribe()
+        {
+            _subject?.Unsubscribe(this);
+            _subject = null;
+        }
+
+        ~Memory()
+        {
+            Unsubscribe();
+        }
+
         private List<int> _memory = new List<int>();
 
         public void OnNewNumber(int number)
